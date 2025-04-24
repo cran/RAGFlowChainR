@@ -1,0 +1,16 @@
+971930939d314e284ff555f06bf899c8 *DESCRIPTION
+3e105e901e0402f90fa97b588920b568 *LICENSE
+8698196b92bb44f330d95645c3f437f2 *NAMESPACE
+c17a006da6c909658e79db1cf4c36067 *R/create_rag_chain.R
+76d5448392d37c814718331d748274ec *R/create_vectorstore.R
+73a9fd63c1ef697d8b803c6ab7354956 *R/data_fetcher.R
+82502f23188ce120db085219977750f5 *README.md
+2388bdc6a3c7dbacc0d7389e93dd54fb *man/create_rag_chain.Rd
+75dc6530da269b83d513c88f5fbde0a0 *man/create_vectorstore.Rd
+70c9f4f55f9295eb4a0176a16e01d92b *man/data_fetcher.Rd
+94733eae652b21a4b4758805540956d1 *man/fetch_data.Rd
+ff235e3f2819b372b1a9ff6dbfe67f18 *tests/testthat.R
+f158c5b1dee380059b425cf6233e6b1d *tests/testthat/00_setup.R
+e4ae4f2f341baa35c0a89c3a8a76f837 *tests/testthat/test_create_rag_chain.R
+d3d039c3716f708c5badbbb37b480214 *tests/testthat/test_create_vectorstore.R
+8ade0a04d9462c0d764838b492fa5651 *tests/testthat/test_data_fetcher.R
