@@ -1,151 +1,190 @@
-# RAGFlowChainR
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# RAGFlowChainR <a href="https://knowusuboaky.github.io/RAGFlowChainR/"><img src="man/figures/ragopenlogo.png" align="right" height="120" /></a>
 
 <!-- badges: start -->
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![CRAN status](https://www.r-pkg.org/badges/version/RAGFlowChainR)](https://cran.r-project.org/package=RAGFlowChainR)
-[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RAGFlowChainR?color=orange)](https://cranlogs.r-pkg.org/badges/grand-total/RAGFlowChainR)
-[![Codecov test coverage](https://codecov.io/gh/knowusuboaky/RAGFlowChainR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/knowusuboaky/RAGFlowChainR?branch=main)
-[![Last Commit](https://img.shields.io/github/last-commit/knowusuboaky/RAGFlowChainR.svg)](https://github.com/knowusuboaky/RAGFlowChainR/commits/main)
+
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/RAGFlowChainR)](https://cran.r-project.org/package=RAGFlowChainR)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RAGFlowChainR?color=orange)](https://cranlogs.r-pkg.org/badges/grand-total/RAGFlowChainR)
+[![Codecov test
+coverage](https://codecov.io/gh/knowusuboaky/RAGFlowChainR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/knowusuboaky/RAGFlowChainR?branch=main)
+[![Last
+Commit](https://img.shields.io/github/last-commit/knowusuboaky/RAGFlowChainR.svg)](https://github.com/knowusuboaky/RAGFlowChainR/commits/main)
 [![Issues](https://img.shields.io/github/issues/knowusuboaky/RAGFlowChainR.svg)](https://github.com/knowusuboaky/RAGFlowChainR/issues)
 <!-- badges: end -->
 
-
 ## Overview
 
-**RAGFlowChainR** is an R package that brings Retrieval-Augmented Generation (RAG) capabilities to R, inspired by LangChain. It enables intelligent retrieval of documents from a local vector store (DuckDB), enhanced with optional web search, and seamless integration with Large Language Models (LLMs).
+**RAGFlowChainR** is an R package that brings Retrieval-Augmented
+Generation (RAG) capabilities to R, inspired by LangChain. It enables
+intelligent retrieval of documents from a local vector store (DuckDB),
+optional web search, and seamless integration with Large Language Models
+(LLMs).
 
 Features include:
 
-- 📂 Intelligent document ingestion from local files and websites.
-- 🔍 Semantic search powered by vector embeddings (OpenAI or Ollama).
-- 🧠 RAG chain execution with conversational memory and dynamic prompt construction.
-- 🔌 Extensible architecture for embedding, indexing, and invoking LLMs.
+- 📂 Ingest files and websites
+- 🔍 Semantic search using vector embeddings
+- 🧠 RAG chain execution with conversational memory and dynamic prompt
+  construction
+- 🔌 Plug-and-play with OpenAI, Ollama, Groq, and Anthropic
 
-For the Python version, see: [RAGFlowChain (PyPI)](https://pypi.org/project/RAGFlowChain/0.5.1/)  
-🔗 GitHub (R): [RAGFlowChainR](https://github.com/knowusuboaky/RAGFlowChainR)  
-🔗 GitHub (Python): [RAGFlowChain](https://github.com/knowusuboaky/RAGFlowChain)
+Python version: [RAGFlowChain
+(PyPI)](https://pypi.org/project/RAGFlowChain/)  
+GitHub (Python):
+[RAGFlowChain](https://github.com/knowusuboaky/RAGFlowChain)
 
----
+
+------------------------------------------------------------------------
 
 ## Installation
 
-```r
-# Install from GitHub
-if (!requireNamespace("remotes")) install.packages("remotes")
+``` r
+install.packages("RAGFlowChainR")
+```
+
+------------------------------------------------------------------------
+
+## Development version
+
+To get the latest features or bug fixes, you can install the development
+version of `RAGFlowChainR` from GitHub:
+
+``` r
+# If needed
+install.packages("remotes")
+
 remotes::install_github("knowusuboaky/RAGFlowChainR")
 ```
----
+
+See the full [function
+reference](https://knowusuboaky.github.io/RAGFlowChainR/reference/) or the
+[package website](https://knowusuboaky.github.io/RAGFlowChainR/) for more
+details.
+
+------------------------------------------------------------------------
+
 
 ## 🔐 Environment Setup
 
-To use features like web search (`Tavily`) and LLMs (`OpenAI`, `Groq`, `Anthropic`), you’ll need to set up your API keys as environment variables. This ensures that sensitive credentials are **never hardcoded** in your scripts.
-
-### Example: Setting Environment Variables in R
-
-```r
-# Add these to your .Renviron file or run once per session
-Sys.setenv(TAVILY_API_KEY = "your-tavily-api-key")
-Sys.setenv(OPENAI_API_KEY = "your-openai-api-key")
-Sys.setenv(GROQ_API_KEY = "your-groq-api-key")
+``` r
+Sys.setenv(TAVILY_API_KEY    = "your-tavily-api-key")
+Sys.setenv(OPENAI_API_KEY    = "your-openai-api-key")
+Sys.setenv(GROQ_API_KEY      = "your-groq-api-key")
 Sys.setenv(ANTHROPIC_API_KEY = "your-anthropic-api-key")
 ```
 
-> 💡 Tip: To persist these keys across sessions, add them to a `~/.Renviron` file (not tracked by git) instead of your code.
+To persist across sessions, add these to your `~/.Renviron` file.
 
-### .Renviron Example
-
-Place this in a file named `.Renviron` in your home directory:
-
-```
-TAVILY_API_KEY=your-tavily-api-key
-OPENAI_API_KEY=your-openai-api-key
-GROQ_API_KEY=your-groq-api-key
-ANTHROPIC_API_KEY=your-anthropic-api-key
-```
-
-Then restart R for the changes to take effect.
-
----
+------------------------------------------------------------------------
 
 ## Usage
 
-### 1. Data Ingestion with `fetch_data()`
+### 1. Data Ingestion
 
-```r
+``` r
 library(RAGFlowChainR)
 
-# Read local files and websites
-local_files <- c("documents/sample.pdf", "documents/sample.txt")
+local_files <- c("tests/testthat/test-data/sprint.pdf", 
+                 "tests/testthat/test-data/introduction.pptx",
+                 "tests/testthat/test-data/overview.txt")
 website_urls <- c("https://www.r-project.org")
 crawl_depth <- 1
 
-data <- fetch_data(local_paths = local_files, website_urls = website_urls, crawl_depth = crawl_depth)
-head(data)
+response <- fetch_data(
+  local_paths = local_files,
+  website_urls = website_urls,
+  crawl_depth = crawl_depth
+)
 ```
 
-### 2. Creating and Using a Vector Store
+``` r
+response
+#>                                source                                      title ...
+#> 1                 documents/sprint.pdf                                       <NA> ...
+#> 2          documents/introduction.pptx                                       <NA> ...
+#> 3               documents/overview.txt                                       <NA> ...
+#> 4            https://www.r-project.org R: The R Project for Statistical Computing ...
+#> ...
 
-```r
-con <- create_vectorstore("my_vectors.duckdb", overwrite = TRUE)
+cat(response$content[1])
+#> Getting Started with Scrum\nCodeWithPraveen.com ...
+```
 
-docs <- data.frame(
-        source        = "Test Source",
-        title         = "Test Title",
-        author        = "Test Author",
-        publishedDate = "2025-01-01",
-        description   = "Test Description",
-        content       = "Hello world",
-        url           = "https://example.com",
-        source_type   = "txt",
-        stringsAsFactors = FALSE
-    )
+------------------------------------------------------------------------
+
+### 2. Vector Store & Semantic Search
+
+``` r
+con <- create_vectorstore("tests/testthat/test-data/my_vectors.duckdb", overwrite = TRUE)
+
+docs <- data.frame(head(response))  # reuse from fetch_data()
 
 insert_vectors(
   con = con,
   df = docs,
-  embed_fun = embed_openai(),  # Or embed_ollama()
+  embed_fun = embed_openai(),
   chunk_chars = 12000
 )
 
 build_vector_index(con, type = c("vss", "fts"))
 
-results <- search_vectors(con, query_text = "Who is Messi?", top_k = 5)
-print(results)
-dbDisconnect(con)
+response <- search_vectors(con, query_text = "Tell me about R?", top_k = 5)
 ```
 
-### 3. Using a RAG Chain
+``` r
+response
+#>    id page_content                                                dist
+#> 1   5 [Home]\nDownload\nCRAN\nR Project...\n...                0.2183
+#> 2   6 [Home]\nDownload\nCRAN\nR Project...\n...                0.2183
+#> ...
 
-```r
+cat(response$page_content[1])
+#> [Home]\nDownload\nCRAN\nR Project\nAbout R\nLogo\n...
+```
+
+------------------------------------------------------------------------
+
+### 3. RAG Chain Querying
+
+``` r
 rag_chain <- create_rag_chain(
   llm = call_llm,
-  vector_database_directory = "my_vectors.duckdb",
+  vector_database_directory = "tests/testthat/test-data/my_vectors.duckdb",
   method = "DuckDB",
   embedding_function = embed_openai(),
   use_web_search = FALSE
 )
 
-# Ask a question
-response <- rag_chain$invoke("Tell me about Messi")
-cat(response$answer)
-
-# Get related documents
-context <- rag_chain$custom_invoke("Tell me about Messi")
-print(context$documents)
-
-# Review and clear chat history
-print(rag_chain$get_session_history())
-rag_chain$clear_history()
-rag_chain$disconnect()
+response <- rag_chain$invoke("Tell me about R")
 ```
 
----
+``` r
+response
+#> $input
+#> [1] "Tell me about R"
+#>
+#> $chat_history
+#> [[1]] $role: "human", $content: "Tell me about R"
+#> [[2]] $role: "assistant", $content: "R is a programming language..."
+#>
+#> $answer
+#> [1] "R is a programming language and software environment commonly used for statistical computing and graphics..."
+
+cat(response$answer)
+#> R is a programming language and software environment commonly used for statistical computing and graphics...
+```
+
+------------------------------------------------------------------------
 
 ## LLM Support
 
-RAGFlowChainR includes built-in support for calling LLMs from providers such as **OpenAI**, **Groq**, and **Anthropic** via the `call_llm()` utility:
-
-```r
+``` r
 call_llm(
   prompt = "Summarize the capital of France.",
   provider = "groq",
@@ -155,24 +194,29 @@ call_llm(
 )
 ```
 
----
+------------------------------------------------------------------------
 
-### 🔧 Coming Soon: [`chatLLM`](https://github.com/knowusuboaky/chatLLM)
+## 📦 Related Package: [`chatLLM`](https://cran.r-project.org/package=chatLLM)
 
-We’re developing a standalone R package, **`chatLLM`**, that will offer a unified, modular interface for interacting with popular LLM providers—**OpenAI**, **Groq**, and **Anthropic**—via a clean, extensible API.
+The [`chatLLM`](https://github.com/knowusuboaky/chatLLM) package (now
+available on CRAN 🎉) offers a modular interface for interacting with
+LLM providers including **OpenAI**, **Groq**, and **Anthropic**.
 
-Features planned:
+``` r
+install.packages("chatLLM")
+```
+
+Features:
 
 - 🔁 Seamless provider switching (`openai`, `groq`, `anthropic`)
-- ✍️ Prompt and system message templating
-- 🚀 Support for streaming responses (planned)
+- ✍️ Prompt + system message templating
+- 💬 Multi-message chat sessions
 - 🔌 Native integration with `RAGFlowChainR`
-- 🔐 Flexible environment-based or direct API key support
+- 🔐 `.Renviron`-based key management
 
-Stay tuned on [GitHub](https://github.com/knowusuboaky/chatLLM) for updates!
-
----
+------------------------------------------------------------------------
 
 ## License
 
-MIT © [Kwadwo Daddy Nyame Owusu Boakye](mailto:kwadwo.owusuboakye@outlook.com)
+MIT © [Kwadwo Daddy Nyame Owusu
+Boakye](mailto:kwadwo.owusuboakye@outlook.com)
