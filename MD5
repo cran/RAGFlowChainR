@@ -1,7 +1,6 @@
-24f2cccce6465465ec9028929db73995 *DESCRIPTION
+ab4f9de4aa5dcb7d8abd917bcc038bd7 *DESCRIPTION
 eddc6daf79b7df1bdcf1c0ed5e701aac *LICENSE
 036dd5ecd3ab484d5459fce4c418695a *NAMESPACE
-b4ec360483f5204badcd1e0de6c8037e *NEWS.md
 76812b43fb63f9961dffd4d57b066479 *R/create_rag_chain.R
 d2d38e6e5d92973589b1b52befbc5cb4 *R/create_vectorstore.R
 05317092cae77f9cfd7963af22cf4ddd *R/data_fetcher.R
