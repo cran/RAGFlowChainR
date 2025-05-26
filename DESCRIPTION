@@ -2,7 +2,7 @@ Package: RAGFlowChainR
 Type: Package
 Title: Retrieval-Augmented Generation (RAG) Workflows in R with Local
         and Web Search
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: person(given = "Kwadwo Daddy Nyame",
                   family = "Owusu Boakye",
                   email = "kwadwo.owusuboakye@outlook.com",
@@ -28,7 +28,7 @@ Imports: DBI, duckdb (>= 0.10.0), httr, dplyr, pdftools, officer,
 Suggests: testthat (>= 3.0.0), jsonlite, stringi, magrittr, roxygen2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-05-21 12:07:01 UTC; kwadw
+Packaged: 2025-05-26 16:48:49 UTC; kwadw
 Author: Kwadwo Daddy Nyame Owusu Boakye [aut, cre]
 Repository: CRAN
-Date/Publication: 2025-05-22 05:00:19 UTC
+Date/Publication: 2025-05-26 18:50:12 UTC

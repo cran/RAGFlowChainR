@@ -69,26 +69,33 @@ test_that("insert_vectors chunks long text silently", {
   dbDisconnect(con, shutdown = TRUE)
 })
 
-test_that("build_vector_index succeeds silently (vss/fts)", {
-  has_fts <- TRUE
-  tmp <- NULL
-  tryCatch({
-    tmp <- dbConnect(duckdb::duckdb(), ":memory:")
-    dbExecute(tmp, "INSTALL fts; LOAD fts;")
-  }, error = function(e) {
-    message("FTS not available or failed to load: ", conditionMessage(e))
-    has_fts <<- FALSE
-  }, finally = {
-    if (!is.null(tmp)) dbDisconnect(tmp, shutdown = TRUE)
-  })
+test_that("build_vector_index succeeds silently with FTS", {
 
+  # 1. open an in-memory store (vss disabled for CRAN)
+  con <- create_vectorstore(
+    db_path       = ":memory:",
+    embedding_dim = 1536,
+    load_vss      = FALSE
+  )
+
+  insert_vectors(con, data.frame(page_content = "y"), mock_embed)
+
+  # 2. try to load FTS — skip gracefully if unavailable
+  has_fts <- TRUE
+  tryCatch(
+    duckdb::duckdb_load_extension(con, "fts"),
+    error = function(e) has_fts <<- FALSE
+  )
   if (!has_fts) {
-    skip("Skipping FTS test: DuckDB FTS extension not available or failed to load.")
+    dbDisconnect(con, shutdown = TRUE)
+    skip("DuckDB FTS extension not available on this platform.")
   }
 
-  con <- suppressWarnings(create_vectorstore(":memory:", TRUE, 1536))
-  insert_vectors(con, data.frame(page_content = "y"), mock_embed)
-  expect_silent(suppressWarnings(build_vector_index(con, c("vss", "fts"))))
+  # 3. build the FTS index only
+  expect_silent(
+    suppressWarnings(build_vector_index(con, type = "fts"))
+  )
+
   dbDisconnect(con, shutdown = TRUE)
 })
 
